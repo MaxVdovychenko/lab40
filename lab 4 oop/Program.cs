@@ -4,11 +4,16 @@ namespace StructConlsole
 {
     public struct Currency
     {
-        public string Name;
-        public double ExchangeRate;
+        public string Name { get; }
+        public double ExchangeRate { get; } // UAH per 1 currency unit
 
         public Currency(string name, double exchangeRate)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Currency name is required.", nameof(name));
+            if (exchangeRate <= 0)
+                throw new ArgumentOutOfRangeException(nameof(exchangeRate), "Exchange rate must be > 0.");
+
             Name = name;
             ExchangeRate = exchangeRate;
         }
@@ -16,14 +21,23 @@ namespace StructConlsole
 
     public struct Product
     {
-        public string Name;
-        public Currency Cost;
-        public int Quantity;
-        public string Manufacturer;
-        public double Weight;
+        public string Name { get; }
+        public Currency Cost { get; }
+        public int Quantity { get; }
+        public string Manufacturer { get; }
+        public double Weight { get; }
 
         public Product(string name, Currency cost, int quantity, string manufacturer, double weight)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Product name is required.", nameof(name));
+            if (string.IsNullOrWhiteSpace(manufacturer))
+                throw new ArgumentException("Manufacturer is required.", nameof(manufacturer));
+            if (quantity < 0)
+                throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity must be >= 0.");
+            if (weight < 0)
+                throw new ArgumentOutOfRangeException(nameof(weight), "Weight must be >= 0.");
+
             Name = name;
             Cost = cost;
             Quantity = quantity;
@@ -54,8 +68,6 @@ namespace StructConlsole
                 HandleMenuChoice(choice, ref products, ref exit);
             }
         }
-
-        // SRP issue 1 fix
 
         static void ShowMenu()
         {
@@ -138,8 +150,6 @@ namespace StructConlsole
                     break;
             }
         }
-
-        // --------------------------- Utility methods ---------------------------
 
         static void Pause()
         {
