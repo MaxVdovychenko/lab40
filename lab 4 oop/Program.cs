@@ -169,48 +169,68 @@ namespace StructConlsole
             return true;
         }
 
-        public static Product[] ReadProductsArray()
+        // ---------- Input helpers (Issue #2 fix) ----------
+
+        static string ReadNonEmpty(string prompt)
         {
-            int n;
+            string s;
             do
             {
-                Console.Write("Enter number of products: ");
-            }
-            while (!int.TryParse(Console.ReadLine(), out n) || n <= 0);
+                Console.Write(prompt);
+                s = Console.ReadLine();
+            } while (string.IsNullOrWhiteSpace(s));
+            return s;
+        }
+
+        static int ReadInt(string prompt, int minInclusive)
+        {
+            int value;
+            do
+            {
+                Console.Write(prompt);
+            } while (!int.TryParse(Console.ReadLine(), out value) || value < minInclusive);
+            return value;
+        }
+
+        static double ReadDouble(string prompt, double minExclusive)
+        {
+            double value;
+            do
+            {
+                Console.Write(prompt);
+            } while (!double.TryParse(Console.ReadLine(), out value) || value <= minExclusive);
+            return value;
+        }
+
+        static double ReadDoubleMinInclusive(string prompt, double minInclusive)
+        {
+            double value;
+            do
+            {
+                Console.Write(prompt);
+            } while (!double.TryParse(Console.ReadLine(), out value) || value < minInclusive);
+            return value;
+        }
+
+        public static Product[] ReadProductsArray()
+        {
+            int n = ReadInt("Enter number of products: ", 1);
 
             Product[] arr = new Product[n];
             for (int i = 0; i < n; i++)
             {
                 Console.WriteLine($"--- Product #{i + 1} ---");
-                Console.Write("Name: ");
-                string name = Console.ReadLine();
 
-                Console.Write("Currency name: ");
-                string currencyName = Console.ReadLine();
+                string name = ReadNonEmpty("Name: ");
+                string currencyName = ReadNonEmpty("Currency name: ");
 
-                double rate;
-                do
-                {
-                    Console.Write("Exchange rate (UAH per unit): ");
-                }
-                while (!double.TryParse(Console.ReadLine(), out rate) || rate <= 0);
+                double rate = ReadDouble("Exchange rate (UAH per unit): ", 0);
 
-                int qty;
-                do
-                {
-                    Console.Write("Quantity: ");
-                }
-                while (!int.TryParse(Console.ReadLine(), out qty) || qty < 0);
+                int qty = ReadInt("Quantity: ", 0);
 
-                Console.Write("Manufacturer: ");
-                string manufacturer = Console.ReadLine();
+                string manufacturer = ReadNonEmpty("Manufacturer: ");
 
-                double weight;
-                do
-                {
-                    Console.Write("Weight (kg): ");
-                }
-                while (!double.TryParse(Console.ReadLine(), out weight) || weight < 0);
+                double weight = ReadDoubleMinInclusive("Weight (kg): ", 0);
 
                 Currency currency = new Currency(currencyName, rate);
                 arr[i] = new Product(name, currency, qty, manufacturer, weight);
