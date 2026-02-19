@@ -4,39 +4,73 @@ namespace StructConlsole
 {
     public struct Currency
     {
+<<<<<<< HEAD
+        public string Name { get; }
+        public double Amount { get; }        // price in this currency
+        public double ExchangeRate { get; }  // UAH per 1 currency unit
+=======
         public string Name;
         public double ExchangeRate;
+>>>>>>> 59459f3 (fix issue 1)
 
-        public Currency(string name, double exchangeRate)
+        public Currency(string name, double amount, double exchangeRate)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Currency name is required.", nameof(name));
+            if (amount < 0)
+                throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be >= 0.");
+            if (exchangeRate <= 0)
+                throw new ArgumentOutOfRangeException(nameof(exchangeRate), "Exchange rate must be > 0.");
+
             Name = name;
+            Amount = amount;
             ExchangeRate = exchangeRate;
         }
+
+        public double ToUAH() => Amount * ExchangeRate;
     }
+
+
 
     public struct Product
     {
-        public string Name;
-        public Currency Cost;
-        public int Quantity;
-        public string Manufacturer;
-        public double Weight;
+        public string Name { get; }
+        public Currency Cost { get; }
+        public int Quantity { get; }
+        public string Manufacturer { get; }
+        public double Weight { get; }
 
         public Product(string name, Currency cost, int quantity, string manufacturer, double weight)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Product name is required.", nameof(name));
+            if (quantity < 0)
+                throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity must be >= 0.");
+            if (weight < 0)
+                throw new ArgumentOutOfRangeException(nameof(weight), "Weight must be >= 0.");
+
             Name = name;
             Cost = cost;
             Quantity = quantity;
-            Manufacturer = manufacturer;
+            Manufacturer = manufacturer ?? "";
             Weight = weight;
         }
 
+<<<<<<< HEAD
+        public double GetUnitPriceUAH() => Cost.ToUAH();
+
+        public double GetTotalPriceUAH() => Cost.ToUAH() * Quantity;
+
+
+=======
         public double GetUnitPriceUAH() => Cost.ExchangeRate;
 
         public double GetTotalPriceUAH() => Cost.ExchangeRate * Quantity;
 
+>>>>>>> 59459f3 (fix issue 1)
         public double GetTotalWeight() => Weight * Quantity;
     }
+
 
     class Program
     {
@@ -54,8 +88,6 @@ namespace StructConlsole
                 HandleMenuChoice(choice, ref products, ref exit);
             }
         }
-
-        // SRP issue 1 fix
 
         static void ShowMenu()
         {
@@ -169,19 +201,28 @@ namespace StructConlsole
             while (!int.TryParse(Console.ReadLine(), out n) || n <= 0);
 
             Product[] arr = new Product[n];
+
             for (int i = 0; i < n; i++)
             {
                 Console.WriteLine($"--- Product #{i + 1} ---");
+
                 Console.Write("Name: ");
                 string name = Console.ReadLine();
 
                 Console.Write("Currency name: ");
                 string currencyName = Console.ReadLine();
 
+                double amount;
+                do
+                {
+                    Console.Write("Price amount in currency: ");
+                }
+                while (!double.TryParse(Console.ReadLine(), out amount) || amount < 0);
+
                 double rate;
                 do
                 {
-                    Console.Write("Exchange rate (UAH per unit): ");
+                    Console.Write("Exchange rate (UAH per 1 currency unit): ");
                 }
                 while (!double.TryParse(Console.ReadLine(), out rate) || rate <= 0);
 
@@ -202,11 +243,13 @@ namespace StructConlsole
                 }
                 while (!double.TryParse(Console.ReadLine(), out weight) || weight < 0);
 
-                Currency currency = new Currency(currencyName, rate);
+                Currency currency = new Currency(currencyName, amount, rate);
                 arr[i] = new Product(name, currency, qty, manufacturer, weight);
             }
+
             return arr;
         }
+
 
         public static void PrintProduct(Product p)
         {

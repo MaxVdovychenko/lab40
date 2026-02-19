@@ -1,61 +1,81 @@
-# Programming Principles
+﻿# Programming Principles
 
-This document describes the programming principles followed in this project, with references to the relevant code fragments.
-
----
-
-## 1. DRY (Don't Repeat Yourself)
-
-Repeated logic is extracted into separate reusable methods instead of being duplicated.
-
-Examples include pause handling, product validation, and product printing.
-
-Code references:  
-- [Pause method](./lab%204%20oop/Program.cs#L133-L137)  
-- [EnsureProductsLoaded method](./lab%204%20oop/Program.cs#L139-L150)  
-- [PrintProduct / PrintProducts](./lab%204%20oop/Program.cs#L212-L220)  
+This document describes the programming principles implemented in this project, based strictly on the current source code structure.
 
 ---
 
-## 2. Decomposition of functionality
+## 1) DRY (Don’t Repeat Yourself)
 
-Program logic is divided into small focused methods responsible for specific operations such as input, output, sorting, and analysis.
+Repeated logic is centralized into reusable methods instead of duplicated.
 
-This improves readability and maintainability.
+### Implemented Examples
 
-Code references:  
-- [ReadProductsArray](./lab%204%20oop/Program.cs#L151-L199)  
-- [GetProductsInfo](./lab%204%20oop/Program.cs#L222-L231)  
-- [SortProductsByPrice / SortProductsByQuantity](./lab%204%20oop/Program.cs#L247-L250)  
+* Product formatting is implemented once and reused.
+* Sorting logic is implemented via comparators and reused through `Array.Sort`.
+* Utility UI flow logic is reused across menu branches.
 
----
+### Code references
 
-## 3. Encapsulation of calculations
-
-All price and weight calculations are implemented inside the `Product` structure, keeping business logic close to the data model.
-
-Code references:  
-- [GetUnitPriceUAH](./lab%204%20oop/Program.cs#L34-L37)  
-- [GetTotalPriceUAH](./lab%204%20oop/Program.cs#L39-L42)  
-- [GetTotalWeight](./lab%204%20oop/Program.cs#L44-L47)  
-
----
-
-## 4. Defensive programming
-
-User input is validated using parsing checks, and program operations verify that product data is loaded before processing.
-
-This prevents runtime errors and invalid states.
-
-Code references:  
-- [Input validation in ReadProductsArray](./lab%204%20oop/Program.cs#L151-L198)  
-- [EnsureProductsLoaded](./lab%204%20oop/Program.cs#L139-L150)  
+* [PrintProduct](./lab%204%20oop/Program.cs#L207-L218)
+* [PrintProducts](./lab%204%20oop/Program.cs#L220-L229)
+* [CompareByPrice](./lab%204%20oop/Program.cs#L241-L246)
+* [CompareByQuantity](./lab%204%20oop/Program.cs#L248-L253)
+* [SortProductsByPrice](./lab%204%20oop/Program.cs#L255-L256)
+* [SortProductsByQuantity](./lab%204%20oop/Program.cs#L258-L259)
+* [Pause](./lab%204%20oop/Program.cs#L140-L144)
+* [EnsureProductsLoaded](./lab%204%20oop/Program.cs#L146-L157)
 
 ---
 
-## Notes on possible improvements
+## 2) Encapsulation of domain calculations
 
-The `Main` method handles menu rendering, input handling, and control flow, which partially violates the Single Responsibility Principle and could be further decomposed in future refactoring.
+All product calculations are encapsulated inside the `Product` structure.
 
-Code reference:  
-- [Main method](./lab%204%20oop/Program.cs#L52-L255)
+### Implemented Calculations
+
+* Unit price → `GetUnitPriceUAH()`
+* Total price → `GetTotalPriceUAH()`
+* Total weight → `GetTotalWeight()`
+
+### Code references
+
+* [Product struct + calculation methods](./lab%204%20oop/Program.cs#L17-L45)
+
+---
+
+## 3) Separation of responsibilities in program flow
+
+Menu rendering, input handling, and processing logic are separated.
+
+### Implementation
+
+* `ShowMenu()` → UI rendering
+* `HandleMenuChoice()` → command handling
+* `ReadProductsArray()` → data input
+* Output handled separately
+
+### Code references
+
+* [Main loop](./lab%204%20oop/Program.cs#L47-L63)
+* [ShowMenu](./lab%204%20oop/Program.cs#L67-L98)
+* [HandleMenuChoice](./lab%204%20oop/Program.cs#L100-L138)
+* [ReadProductsArray](./lab%204%20oop/Program.cs#L159-L205)
+
+---
+
+## 4) Defensive input validation
+
+User input is validated before processing.
+
+### Implementation
+
+* Numeric input uses `TryParse` loops
+* Array usage is guarded by a loader check
+
+### Code references
+
+* [ReadProductsArray validation loops](./lab%204%20oop/Program.cs#L159-L205)
+* [EnsureProductsLoaded](./lab%204%20oop/Program.cs#L146-L157)
+
+---
+
