@@ -169,7 +169,7 @@ namespace StructConlsole
             return true;
         }
 
-        // ---------- Input helpers (Issue #2 fix) ----------
+        // ---------- Input helpers ----------
 
         static string ReadNonEmpty(string prompt)
         {
@@ -271,18 +271,18 @@ namespace StructConlsole
             }
         }
 
+        // ---------- Issue #3 fix: efficient comparisons ----------
+
         public static int CompareByPrice(Product a, Product b)
         {
-            if (a.GetUnitPriceUAH() > b.GetUnitPriceUAH()) return 1;
-            if (a.GetUnitPriceUAH() < b.GetUnitPriceUAH()) return -1;
-            return 0;
+            double pa = a.GetUnitPriceUAH();
+            double pb = b.GetUnitPriceUAH();
+            return pa.CompareTo(pb);
         }
 
         public static int CompareByQuantity(Product a, Product b)
         {
-            if (a.Quantity > b.Quantity) return 1;
-            if (a.Quantity < b.Quantity) return -1;
-            return 0;
+            return a.Quantity.CompareTo(b.Quantity);
         }
 
         public static void SortProductsByPrice(Product[] arr) => Array.Sort(arr, CompareByPrice);
