@@ -1,0 +1,16 @@
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\bin\Debug\net5.0\lab 4 oop.exe
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\bin\Debug\net5.0\lab 4 oop.deps.json
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\bin\Debug\net5.0\lab 4 oop.runtimeconfig.json
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\bin\Debug\net5.0\lab 4 oop.runtimeconfig.dev.json
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\bin\Debug\net5.0\lab 4 oop.dll
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\bin\Debug\net5.0\ref\lab 4 oop.dll
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\bin\Debug\net5.0\lab 4 oop.pdb
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.csproj.AssemblyReference.cache
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.AssemblyInfoInputs.cache
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.AssemblyInfo.cs
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.csproj.CoreCompileInputs.cache
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.dll
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\ref\lab 4 oop.dll
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.pdb
+C:\Users\Vdovy\source\repos\lab 4 oop\lab 4 oop\obj\Debug\net5.0\lab 4 oop.genruntimeconfig.cache
